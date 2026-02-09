@@ -1,0 +1,8 @@
+# secrets
+backend/serviceAccountKey.json
+backend/serviceAccountkey.json
+backend/serviceAccount*.json
+backend/*serviceAccount*.json
+backend/*.env
+.env
+*.env
