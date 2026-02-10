@@ -5,10 +5,11 @@ export default fp(async (fastify) => {
     dotenv: true,
     schema: {
       type: 'object',
-      required: ['FIREBASE_PROJECT_ID'],
+      required: ['FIREBASE_PROJECT_ID', 'JWT_SECRET'],
       properties: {
         PORT: { type: 'string', default: '8080' },
-        FIREBASE_PROJECT_ID: { type: 'string' }
+        FIREBASE_PROJECT_ID: { type: 'string' },
+        JWT_SECRET: { type: 'string' }
       }
     }
   });
