@@ -3,16 +3,23 @@ import { createTask, getAllTasks, getTask, updateTask, deleteTask } from "../ser
 
 export async function create(req, reply) {
   try {
-    const task = await createTask(req.body);
+    // Ensure ownerId is always set from authenticated user
+    const task = await createTask(req.body, req.user.id);
     return reply.code(201).send(task);
   } catch (error) {
+    console.error('❌ Create task failed:', error.message);
     return reply.code(400).send({ message: 'Failed to create task', error: error.message });
   }
 }
 
-export async function getAll(reg, res) {
-    const tasks = await getAllTasks();
-    return res.send(tasks)    
+export async function getAll(req, res) {
+  try {
+    const tasks = await getAllTasks(req.user);
+    return res.send(tasks);
+  } catch (error) {
+    console.error('❌ Get all tasks failed:', error.message);
+    return res.code(400).send({ message: 'Failed to load tasks', error: error.message });
+  }
 }
 
 export async function get(req, reply) {
@@ -24,34 +31,34 @@ export async function get(req, reply) {
 
 export async function update(req, reply) {
   const { id } = req.params;
-  console.log(`\ud83d\udcdd Updating task ID: ${id}`, 'Body:', req.body);
+  console.log(`📝 Updating task ID: ${id}`, 'Body:', req.body);
   try {
-    const task = await updateTask(id, req.body);
+    const task = await updateTask(id, req.body, req.user);
     if (!task) {
-      console.error(`\u274c Task ID ${id} not found`);
+      console.error(`❌ Task ID ${id} not found`);
       return reply.code(404).send({ message: 'Task not found' });
     }
-    console.log(`\u2705 Task ID ${id} updated successfully:`, task);
+    console.log(`✅ Task ID ${id} updated successfully:`, task);
     return reply.send(task);
   } catch (error) {
-    console.error(`\u274c Update task ID ${id} failed:`, error.message);
+    console.error(`❌ Update task ID ${id} failed:`, error.message);
     return reply.code(400).send({ message: 'Failed to update task', error: error.message });
   }
 }
 
 export async function remove(req, reply) {
   const { id } = req.params;
-  console.log(`\ud83d\uddd1\ufe0f Deleting task ID: ${id}`);
+  console.log(`🗑️ Deleting task ID: ${id}`);
   try {
-    const ok = await deleteTask(id);
+    const ok = await deleteTask(id, req.user);
     if (!ok) {
-      console.error(`\u274c Task ID ${id} not found for deletion`);
+      console.error(`❌ Task ID ${id} not found for deletion`);
       return reply.code(404).send({ message: 'Task not found' });
     }
-    console.log(`\u2705 Task ID ${id} deleted successfully`);
+    console.log(`✅ Task ID ${id} deleted successfully`);
     return reply.code(200).send({ success: true, message: 'Task deleted successfully' });
   } catch (error) {
-    console.error(`\u274c Delete task ID ${id} failed:`, error.message);
+    console.error(`❌ Delete task ID ${id} failed:`, error.message);
     return reply.code(400).send({ message: 'Failed to delete task', error: error.message });
   }
 }

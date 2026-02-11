@@ -8,6 +8,7 @@ import TaskDetailPage from "./pages/TaskDetailPage";
 import TaskEditPage from "./pages/TaskEditPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import AdminPage from "./pages/AdminPage";
 import { AppLayout, NotFound, ProtectedRoute, theme } from "./config/config";
 
 
@@ -48,6 +49,9 @@ export default function App() {
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/tasks/:id" element={<TaskDetailPage />} />
             <Route path="/tasks/:id/edit" element={<TaskEditPage />} />
+
+            {/* Admin route */}
+            <Route path="/admin" element={<AdminPage />} />
 
             {/* 404 */}
             <Route path="*" element={<NotFound />} />

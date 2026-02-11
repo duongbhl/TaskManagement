@@ -28,5 +28,5 @@ try {
 await app.register(routes);
 
 const port = Number(process.env.PORT || 8080);
-app.listen({ port, host: '0.0.0.0' });
+app.listen({ port});
 console.log(`🚀 Server running at http://0.0.0.0:${port}`);

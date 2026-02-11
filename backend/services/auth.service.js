@@ -6,7 +6,7 @@ const usersCollection = () => db().collection('users');
 // CREATE USER
 export async function createUser(userData) {
   try {
-    const { email, name, password } = userData;
+    const { email, name, password} = userData;
     
     // Check if user already exists
     const existingUser = await getUserByEmail(email);
@@ -22,6 +22,7 @@ export async function createUser(userData) {
       email,
       name,
       password: hashedPassword,
+      role: "user",
       createdAt: Date.now(),
       updatedAt: Date.now()
     };

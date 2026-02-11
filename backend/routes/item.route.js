@@ -1,22 +1,19 @@
 import { create, get, getAll, remove, update } from "../controllers/item.controller.js";
+import { verifyToken, checkTaskOwnership } from "../middleware/auth.middleware.js";
 
 export default async function taskRoutes(fastify) {
-    fastify.get('/tasks', getAll);
-    fastify.get('/tasks/:id', get);
-    fastify.post('/tasks', create);
-    fastify.patch('/tasks/:id', update);
-    fastify.delete('/tasks/:id', remove);
+    // Get all tasks (with filtering based on user role)
+    fastify.get('/tasks', { preHandler: verifyToken }, getAll);
     
-    // Handle preflight requests for CORS
-    fastify.options('/tasks', (request, reply) => {
-        reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-        reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        reply.send(200);
-    });
+    // Get single task (with ownership check)
+    fastify.get('/tasks/:id', { preHandler: [verifyToken, checkTaskOwnership] }, get);
     
-    fastify.options('/tasks/:id', (request, reply) => {
-        reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-        reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        reply.send(200);
-    });
+    // Create task (requires authentication)
+    fastify.post('/tasks', { preHandler: verifyToken }, create);
+    
+    // Update task (with ownership check)
+    fastify.patch('/tasks/:id', { preHandler: [verifyToken, checkTaskOwnership] }, update);
+    
+    // Delete task (with ownership check)
+    fastify.delete('/tasks/:id', { preHandler: [verifyToken, checkTaskOwnership] }, remove);
 }

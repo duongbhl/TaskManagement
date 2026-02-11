@@ -53,6 +53,11 @@ export function AppLayout() {
           <Button color="inherit" onClick={() => navigate('/tasks')}>
             Tasks
           </Button>
+          {user && user.role === 'admin' && (
+            <Button color="inherit" onClick={() => navigate('/admin')} sx={{ ml: 1 }}>
+              Admin
+            </Button>
+          )}
           {user && (
             <>
               <Typography variant="body2" sx={{ mx: 2 }}>
