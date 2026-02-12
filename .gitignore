@@ -6,3 +6,7 @@ backend/*serviceAccount*.json
 backend/*.env
 .env
 *.env
+DEPLOYMENT_CHECKLIST.md
+DEPLOYMENT.md
+FIREBASE_SETUP.md
+VERCEL_DEPLOYMENT.md
