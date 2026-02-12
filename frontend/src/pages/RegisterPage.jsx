@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Box, Button, TextField, Typography, Container, Paper, Alert } from '@mui/material';
+import { Box, Button, TextField, Typography, Container, Paper, Alert, InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 import { authApi } from '../api/auth.api';
 
@@ -14,6 +15,8 @@ export default function RegisterPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -99,24 +102,52 @@ export default function RegisterPage() {
             fullWidth
             label="Password"
             name="password"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             value={formData.password}
             onChange={handleChange}
             margin="normal"
             required
             disabled={loading}
             helperText="Minimum 6 characters"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    onMouseDown={(e) => e.preventDefault()}
+                    edge="end"
+                    disabled={loading}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
           />
           <TextField
             fullWidth
             label="Confirm Password"
             name="confirmPassword"
-            type="password"
+            type={showConfirmPassword ? 'text' : 'password'}
             value={formData.confirmPassword}
             onChange={handleChange}
             margin="normal"
             required
             disabled={loading}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    onMouseDown={(e) => e.preventDefault()}
+                    edge="end"
+                    disabled={loading}
+                  >
+                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
           />
           <Button
             fullWidth

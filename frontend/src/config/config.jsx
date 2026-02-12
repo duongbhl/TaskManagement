@@ -1,7 +1,7 @@
 import { authApi } from "../api/auth.api";
 import { AppBar, Container, Toolbar, Typography, Box, Button, Menu, MenuItem, createTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, Navigate, Link } from "react-router-dom";
 
 
 export const theme = createTheme({
@@ -75,6 +75,7 @@ export function AppLayout() {
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
               >
+                <MenuItem onClick={() => { navigate('/change-password'); handleMenuClose(); }}>Change Password</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </>

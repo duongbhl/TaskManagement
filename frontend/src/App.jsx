@@ -9,6 +9,9 @@ import TaskEditPage from "./pages/TaskEditPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AdminPage from "./pages/AdminPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 import { AppLayout, NotFound, ProtectedRoute, theme } from "./config/config";
 
 
@@ -33,6 +36,8 @@ export default function App() {
           {/* Auth Routes - No Layout */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           {/* Protected Routes with Layout */}
           <Route
@@ -49,6 +54,9 @@ export default function App() {
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/tasks/:id" element={<TaskDetailPage />} />
             <Route path="/tasks/:id/edit" element={<TaskEditPage />} />
+
+            {/* Password routes */}
+            <Route path="/change-password" element={<ChangePasswordPage />} />
 
             {/* Admin route */}
             <Route path="/admin" element={<AdminPage />} />

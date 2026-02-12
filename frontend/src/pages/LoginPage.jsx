@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Box, Button, TextField, Typography, Container, Paper, Alert } from '@mui/material';
+import { Box, Button, TextField, Typography, Container, Paper, Alert, InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 import { authApi } from '../api/auth.api';
 
@@ -12,6 +13,7 @@ export default function LoginPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -70,12 +72,26 @@ export default function LoginPage() {
             fullWidth
             label="Password"
             name="password"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             value={formData.password}
             onChange={handleChange}
             margin="normal"
             required
             disabled={loading}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    onMouseDown={(e) => e.preventDefault()}
+                    edge="end"
+                    disabled={loading}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
           />
           <Button
             fullWidth
@@ -92,8 +108,11 @@ export default function LoginPage() {
 
         <Box sx={{ mt: 2, textAlign: 'center' }}>
           <Typography variant="body2">
-            Don't have an account?{' '}
-            <Link to="/register" style={{ color: '#1976d2', textDecoration: 'none' }}>
+            <Link to="/forgot-password" style={{ color: '#1976d2', textDecoration: 'none', marginRight: '16px' }}>
+              Forgot password?
+            </Link>
+            {' | '}
+            <Link to="/register" style={{ color: '#1976d2', textDecoration: 'none', marginLeft: '16px' }}>
               Register here
             </Link>
           </Typography>
