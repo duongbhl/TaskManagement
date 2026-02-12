@@ -2,13 +2,12 @@
   "version": 2,
   "buildCommand": "npm run build --prefix frontend",
   "outputDirectory": "frontend/dist",
-  "framework": "react",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "env": {
-    "VITE_API_URL": "@vite_api_url"
+    "VITE_API_URL": "http://localhost:8080/api"
   },
   "functions": {
     "api/index.js": {
