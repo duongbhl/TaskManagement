@@ -1,0 +1,8 @@
+backend/
+frontend/node_modules/
+node_modules/
+*.env
+.env.local
+.git
+.gitignore
+README.md
